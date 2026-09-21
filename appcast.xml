@@ -9,14 +9,14 @@
         <item>
             <title>Version 1.1</title>
             <sparkle:releaseNotesLink>https://github.com/LaluIman/Memo/releases/tag/v1.1</sparkle:releaseNotesLink>
-            <pubDate>Mon, 21 Sep 2026 14:11:28 +0000</pubDate>
+            <pubDate>Mon, 21 Sep 2026 14:32:33 +0000</pubDate>
             <enclosure
                 url="https://github.com/LaluIman/Memo/releases/download/v1.1/Memo-1.1.dmg"
                 sparkle:version="2"
                 sparkle:shortVersionString="1.1"
-                length="1348765"
+                length="1338031"
                 type="application/x-apple-diskimage"
-                sparkle:edSignature="Ymn6UdJt/jjq4LztAz0DBurpWp7O51qEeirrH8JTn9s5YHiRwEKHksXVC65q1qTwNWP9sC/5cINHSx0NUHR7CA=="
+                sparkle:edSignature="AdC3XJIvTbB2smTcB1JbkX7g0ziTBIO9/0Zh0DHrliZ5KuIc7S8uCKCYKSkpJcT8hnLc8NxblE4tW3ZJflvdDw=="
             />
             <sparkle:minimumSystemVersion>27.0</sparkle:minimumSystemVersion>
         </item>
