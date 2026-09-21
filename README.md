@@ -5,7 +5,7 @@
   <p>
     <img src="https://img.shields.io/badge/macOS-27%2B-lightgrey" alt="macOS 27+" />
     <img src="https://img.shields.io/badge/Swift-SwiftUI-orange" alt="Swift SwiftUI" />
-    <img src="https://img.shields.io/github/license/LaluIman/Memo" alt="License" />
+    <img src="https://img.shields.io/badge/license-MIT-green" alt="License: MIT" />
   </p>
   <br>
   <img width="528" alt="Memo menu bar dropdown showing a task list with priorities" src="https://github.com/user-attachments/assets/35fc68db-27f9-4ee0-aa03-f3d4816f0354" />
