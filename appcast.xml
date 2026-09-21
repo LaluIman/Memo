@@ -6,6 +6,20 @@
         <description>Most recent changes for Memo, with links to updates.</description>
         <language>en</language>
         <!-- RELEASE_ITEMS_START: scripts/release.sh inserts new <item> entries directly below this line. Do not remove or duplicate this comment. -->
+        <item>
+            <title>Version 1.1</title>
+            <sparkle:releaseNotesLink>https://github.com/LaluIman/Memo/releases/tag/v1.1</sparkle:releaseNotesLink>
+            <pubDate>Mon, 21 Sep 2026 14:11:28 +0000</pubDate>
+            <enclosure
+                url="https://github.com/LaluIman/Memo/releases/download/v1.1/Memo-1.1.dmg"
+                sparkle:version="2"
+                sparkle:shortVersionString="1.1"
+                length="1348765"
+                type="application/x-apple-diskimage"
+                sparkle:edSignature="Ymn6UdJt/jjq4LztAz0DBurpWp7O51qEeirrH8JTn9s5YHiRwEKHksXVC65q1qTwNWP9sC/5cINHSx0NUHR7CA=="
+            />
+            <sparkle:minimumSystemVersion>27.0</sparkle:minimumSystemVersion>
+        </item>
         <!--
             Example of what a release entry looks like:
 
@@ -14,11 +28,11 @@
                 <sparkle:releaseNotesLink>https://github.com/LaluIman/Memo/releases/tag/v1.1</sparkle:releaseNotesLink>
                 <pubDate>Mon, 01 Jan 2026 00:00:00 +0000</pubDate>
                 <enclosure
-                    url="https://github.com/LaluIman/Memo/releases/download/v1.1/Memo-1.1.zip"
+                    url="https://github.com/LaluIman/Memo/releases/download/v1.1/Memo-1.1.dmg"
                     sparkle:version="2"
                     sparkle:shortVersionString="1.1"
                     length="0"
-                    type="application/octet-stream"
+                    type="application/x-apple-diskimage"
                     sparkle:edSignature="PASTE_SIGNATURE_FROM_sign_update_HERE"
                 />
                 <sparkle:minimumSystemVersion>27.0</sparkle:minimumSystemVersion>

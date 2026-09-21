@@ -2,9 +2,12 @@
 #
 # Memo release helper.
 #
-# Builds a Release archive, exports Memo.app, zips it, signs it with
-# Sparkle's EdDSA key (from the login Keychain), and prints (optionally
-# inserts) the appcast.xml <item> entry for the release.
+# Builds a Release archive, exports Memo.app, packages it into a .dmg
+# (via create-dmg), signs it with Sparkle's EdDSA key (from the login
+# Keychain), and prints (optionally inserts) the appcast.xml <item>
+# entry for the release.
+#
+# Requires: create-dmg (brew install create-dmg)
 #
 # This script does NOT push to git, create a GitHub release, or upload
 # anything — it only prepares local files and prints the exact commands
@@ -71,11 +74,33 @@ if [[ ! -d "$APP_PATH" ]]; then
   exit 1
 fi
 
-ZIP_NAME="Memo-$VERSION.zip"
-ZIP_PATH="$BUILD_DIR/$ZIP_NAME"
+if ! command -v create-dmg >/dev/null 2>&1; then
+  echo "create-dmg not found. Install it with: brew install create-dmg" >&2
+  exit 1
+fi
 
-echo "==> Zipping app"
-ditto -c -k --keepParent "$APP_PATH" "$ZIP_PATH"
+DMG_NAME="Memo-$VERSION.dmg"
+DMG_PATH="$BUILD_DIR/$DMG_NAME"
+
+echo "==> Building DMG"
+rm -f "$DMG_PATH"
+create-dmg \
+  --volname "Memo $VERSION" \
+  --window-size 600 400 \
+  --icon-size 100 \
+  --icon "Memo.app" 175 190 \
+  --app-drop-link 425 190 \
+  "$DMG_PATH" \
+  "$APP_PATH" \
+  || {
+    # create-dmg exits non-zero even on success in some environments (e.g. AppleScript
+    # warnings when Finder can't set icon positions); treat it as fatal only if no DMG appeared.
+    if [[ ! -f "$DMG_PATH" ]]; then
+      echo "create-dmg failed and no DMG was produced." >&2
+      exit 1
+    fi
+    echo "create-dmg reported a non-fatal warning; DMG was created at $DMG_PATH" >&2
+  }
 
 echo "==> Locating Sparkle's sign_update tool"
 SIGN_UPDATE=$(find "$HOME/Library/Developer/Xcode/DerivedData" -maxdepth 8 \
@@ -88,14 +113,14 @@ if [[ -z "$SIGN_UPDATE" ]]; then
 fi
 
 echo "==> Signing update with Sparkle (using Keychain private key)"
-SIGN_OUTPUT=$("$SIGN_UPDATE" "$ZIP_PATH")
+SIGN_OUTPUT=$("$SIGN_UPDATE" "$DMG_PATH")
 echo "$SIGN_OUTPUT"
 
 ED_SIGNATURE=$(echo "$SIGN_OUTPUT" | sed -n 's/.*sparkle:edSignature="\([^"]*\)".*/\1/p')
 FILE_LENGTH=$(echo "$SIGN_OUTPUT" | sed -n 's/.*length="\([^"]*\)".*/\1/p')
 
 if [[ -z "$FILE_LENGTH" ]]; then
-  FILE_LENGTH=$(stat -f%z "$ZIP_PATH")
+  FILE_LENGTH=$(stat -f%z "$DMG_PATH")
 fi
 
 if [[ -z "$ED_SIGNATURE" ]]; then
@@ -103,7 +128,7 @@ if [[ -z "$ED_SIGNATURE" ]]; then
 fi
 
 PUB_DATE=$(date -u "+%a, %d %b %Y %H:%M:%S +0000")
-DOWNLOAD_URL="https://github.com/$REPO/releases/download/v$VERSION/$ZIP_NAME"
+DOWNLOAD_URL="https://github.com/$REPO/releases/download/v$VERSION/$DMG_NAME"
 
 ITEM_FILE=$(mktemp)
 cat > "$ITEM_FILE" <<EOF
@@ -116,7 +141,7 @@ cat > "$ITEM_FILE" <<EOF
                 sparkle:version="$BUILD_NUMBER"
                 sparkle:shortVersionString="$VERSION"
                 length="$FILE_LENGTH"
-                type="application/octet-stream"
+                type="application/x-apple-diskimage"
                 sparkle:edSignature="$ED_SIGNATURE"
             />
             <sparkle:minimumSystemVersion>27.0</sparkle:minimumSystemVersion>
@@ -143,13 +168,13 @@ fi
 rm -f "$ITEM_FILE"
 
 echo ""
-echo "==> Build artifact: $ZIP_PATH"
+echo "==> Build artifact: $DMG_PATH"
 echo ""
 echo "==> Next steps:"
 echo "1. Review appcast.xml changes: git diff appcast.xml"
 echo "2. Tag and push: git tag v$VERSION && git push origin v$VERSION"
-echo "3. Create the GitHub release with the zip attached:"
-echo "     gh release create v$VERSION \"$ZIP_PATH\" --title \"Memo $VERSION\" --generate-notes"
+echo "3. Create the GitHub release with the DMG attached:"
+echo "     gh release create v$VERSION \"$DMG_PATH\" --title \"Memo $VERSION\" --generate-notes"
 echo "4. Commit and push appcast.xml so the app's feed picks up the new version:"
 echo "     git add appcast.xml && git commit -m \"Release v$VERSION\" && git push"
 echo ""
