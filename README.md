@@ -13,7 +13,7 @@
   <br>
 </div>
 
-Memo turns your macOS menu bar into a running task list — no Dock icon, no window to manage, just a click away whenever you need it. Add tasks, set a priority, drag to reorder, and check them off with a sound and a satisfying tick. Decide what happens to finished items — keep them in place, send them to the bottom, or hide them on completion — and pick the menu bar icon and counter that fit how you like to work.
+Memo turns your macOS menu bar into a running task list — no Dock icon, no window to manage, just a click away whenever you need it. Add tasks, set a priority, give them a due date, drag to reorder, and check them off with a sound and a satisfying tick. Decide what happens to finished items — keep them in place, send them to the bottom, or hide them on completion — and pick the menu bar icon and counter that fit how you like to work.
 
 ## Installation
 
@@ -33,6 +33,7 @@ Memo turns your macOS menu bar into a running task list — no Dock icon, no win
 | Drag-to-Reorder | Reorder tasks by dragging them within the list. |
 | Task Priorities | Assign each task a priority (Low, Medium, High, Critical), shown with a color indicator. |
 | Default Priority | Set the priority automatically applied to new tasks. |
+| Due Dates | Give any task a due date via a quick date picker. Shows as "Today," "Tomorrow," or the date, and turns red when overdue. |
 
 ### Completion
 
@@ -50,4 +51,6 @@ Memo turns your macOS menu bar into a running task list — no Dock icon, no win
 | Customizable Icon | Choose from several menu bar icon styles (Default, Checklist, Checkmark Circle, List, Star, Tray). |
 | Launch at Startup | Optionally launch the app automatically at login. |
 | Persistent Storage | Tasks and preferences are saved locally and restored between launches. |
+| Automatic Updates | Memo checks for new versions in the background (or on demand from Settings) and installs updates via [Sparkle](https://sparkle-project.org). |
+| Send Feedback | Report a bug, request a feature, or ask a question directly from Settings — no need to leave the app. |
 

@@ -1,0 +1,28 @@
+<?xml version="1.0" standalone="yes"?>
+<rss version="2.0" xmlns:sparkle="http://www.andymatuschak.org/xml-namespaces/sparkle">
+    <channel>
+        <title>Memo Changelog</title>
+        <link>https://raw.githubusercontent.com/LaluIman/Memo/main/appcast.xml</link>
+        <description>Most recent changes for Memo, with links to updates.</description>
+        <language>en</language>
+        <!-- RELEASE_ITEMS_START: scripts/release.sh inserts new <item> entries directly below this line. Do not remove or duplicate this comment. -->
+        <!--
+            Example of what a release entry looks like:
+
+            <item>
+                <title>Version 1.1</title>
+                <sparkle:releaseNotesLink>https://github.com/LaluIman/Memo/releases/tag/v1.1</sparkle:releaseNotesLink>
+                <pubDate>Mon, 01 Jan 2026 00:00:00 +0000</pubDate>
+                <enclosure
+                    url="https://github.com/LaluIman/Memo/releases/download/v1.1/Memo-1.1.zip"
+                    sparkle:version="2"
+                    sparkle:shortVersionString="1.1"
+                    length="0"
+                    type="application/octet-stream"
+                    sparkle:edSignature="PASTE_SIGNATURE_FROM_sign_update_HERE"
+                />
+                <sparkle:minimumSystemVersion>27.0</sparkle:minimumSystemVersion>
+            </item>
+        -->
+    </channel>
+</rss>

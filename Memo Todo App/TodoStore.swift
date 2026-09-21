@@ -132,6 +132,11 @@ final class TodoStore {
         items[index].title = trimmed
     }
 
+    func setDueDate(of item: TodoItem, to date: Date?) {
+        guard let index = items.firstIndex(where: { $0.id == item.id }) else { return }
+        items[index].dueDate = date.map { Calendar.current.startOfDay(for: $0) }
+    }
+
     private func playCompletionSound() {
         guard let completionSound else { return }
         completionSound.stop()

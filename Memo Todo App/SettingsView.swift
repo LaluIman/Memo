@@ -1,7 +1,17 @@
+import Sparkle
 import SwiftUI
 
 struct SettingsView: View {
     @Bindable var store: TodoStore
+    let updaterController: SPUStandardUpdaterController
+    @State private var showingFeedback = false
+
+    private var automaticallyChecksForUpdates: Binding<Bool> {
+        Binding(
+            get: { updaterController.updater.automaticallyChecksForUpdates },
+            set: { updaterController.updater.automaticallyChecksForUpdates = $0 }
+        )
+    }
 
     var body: some View {
         VStack(spacing: 0) {
@@ -58,25 +68,58 @@ struct SettingsView: View {
                         }
                     }
                 }
+
+                Section("Updates") {
+                    Toggle("Automatically Check for Updates", isOn: automaticallyChecksForUpdates)
+                        .toggleStyle(.checkbox)
+
+                    HStack {
+                        Button("Check for Updates...") {
+                            updaterController.checkForUpdates(nil)
+                        }
+                        .disabled(!updaterController.updater.canCheckForUpdates)
+
+                        Spacer()
+
+                        if let lastCheck = updaterController.updater.lastUpdateCheckDate {
+                            Text("Last checked \(lastCheck.formatted(date: .abbreviated, time: .shortened))")
+                                .font(.caption)
+                                .foregroundStyle(.secondary)
+                        }
+                    }
+                }
             }
             .formStyle(.grouped)
 
-            VStack(spacing: 2) {
-                Text("\(Bundle.main.appName) \(Bundle.main.appVersionString)")
-                    .foregroundStyle(.secondary)
-                HStack(spacing: 4) {
-                    Text("made by")
+            VStack(spacing: 6) {
+                VStack(spacing: 2) {
+                    Text("\(Bundle.main.appName) \(Bundle.main.appVersionString)")
                         .foregroundStyle(.secondary)
-                    
-                    Link("Lalu Iman", destination: URL(string: "https://github.com/LaluIman")!)
+                    HStack(spacing: 4) {
+                        Text("made by")
+                            .foregroundStyle(.secondary)
+
+                        Link("Lalu Iman", destination: URL(string: "https://github.com/LaluIman")!)
+                    }
                 }
+                .font(.caption)
+
+                Button {
+                    showingFeedback = true
+                } label: {
+                    Label("Send Feedback", systemImage: "envelope")
+                }
+                .buttonStyle(.link)
+                .font(.caption)
             }
-            .font(.caption)
             .padding(.bottom, 14)
         }
-        .frame(width: 420)
+        .frame(width: 500, height: 560)
         .onDisappear {
             NSApp.setActivationPolicy(.accessory)
+        }
+        .sheet(isPresented: $showingFeedback) {
+            FeedbackView()
         }
     }
 }
@@ -96,5 +139,6 @@ private extension Bundle {
 }
 
 #Preview {
-    SettingsView(store: TodoStore())
+    let updaterController = SPUStandardUpdaterController(startingUpdater: false, updaterDelegate: nil, userDriverDelegate: nil)
+    return SettingsView(store: TodoStore(), updaterController: updaterController)
 }

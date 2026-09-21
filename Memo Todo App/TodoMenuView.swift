@@ -10,6 +10,8 @@ struct TodoMenuView: View {
     @State private var editingTitle = ""
     @FocusState private var focusedItemID: TodoItem.ID?
 
+    @State private var datePickerItemID: TodoItem.ID?
+
     @Environment(\.openSettings) private var openSettings
 
     private var displayedItems: [TodoItem] {
@@ -148,6 +150,27 @@ struct TodoMenuView: View {
             Spacer()
 
             Button {
+                datePickerItemID = item.id
+            } label: {
+                if let dueDate = item.dueDate {
+                    Text(Self.dueDateLabel(dueDate))
+                        .font(.caption)
+                        .foregroundStyle(item.isOverdue ? Color.red : Color.secondary)
+                } else {
+                    Image(systemName: "calendar.badge.plus")
+                        .foregroundStyle(.secondary)
+                        .opacity(0.6)
+                }
+            }
+            .buttonStyle(.plain)
+            .popover(isPresented: Binding(
+                get: { datePickerItemID == item.id },
+                set: { if !$0 { datePickerItemID = nil } }
+            )) {
+                dueDatePicker(for: item)
+            }
+
+            Button {
                 store.delete(item)
             } label: {
                 Image(systemName: "xmark")
@@ -158,6 +181,38 @@ struct TodoMenuView: View {
         }
         .padding(.horizontal, 8)
         .padding(.vertical, 4)
+    }
+
+    private func dueDatePicker(for item: TodoItem) -> some View {
+        VStack(spacing: 8) {
+            DatePicker(
+                "Due Date",
+                selection: Binding(
+                    get: { item.dueDate ?? Date() },
+                    set: { store.setDueDate(of: item, to: $0) }
+                ),
+                displayedComponents: .date
+            )
+            .datePickerStyle(.graphical)
+            .labelsHidden()
+
+            Button("Clear Due Date") {
+                store.setDueDate(of: item, to: nil)
+                datePickerItemID = nil
+            }
+            .disabled(item.dueDate == nil)
+        }
+        .padding(12)
+    }
+
+    private static func dueDateLabel(_ date: Date) -> String {
+        let calendar = Calendar.current
+        if calendar.isDateInToday(date) { return "Today" }
+        if calendar.isDateInTomorrow(date) { return "Tomorrow" }
+        if calendar.isDateInYesterday(date) { return "Yesterday" }
+        let formatter = DateFormatter()
+        formatter.dateFormat = "MMM d"
+        return formatter.string(from: date)
     }
 
     private func addItem() {
