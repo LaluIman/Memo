@@ -17,9 +17,20 @@ Memo turns your macOS menu bar into a running task list — no Dock icon, no win
 
 ## Installation
 
+Memo is distributed as source only — it isn't notarized, so a prebuilt download would be blocked by Gatekeeper. Build it yourself with Xcode:
+
+```bash
+git clone https://github.com/LaluIman/Memo.git
+cd Memo
+open "Memo Todo App.xcodeproj"
+```
+
+Then hit **Run** in Xcode (⌘R). The app is signed with your own Apple ID during the build, so it launches immediately with no security warnings.
+
 **Requirements:**
 - macOS 27 Golden Gate or later
 - Apple Silicon
+- Xcode 26 or later, with a free Apple ID signed in (Xcode → Settings → Accounts)
 
 ## Features
 
@@ -51,6 +62,5 @@ Memo turns your macOS menu bar into a running task list — no Dock icon, no win
 | Customizable Icon | Choose from several menu bar icon styles (Default, Checklist, Checkmark Circle, List, Star, Tray). |
 | Launch at Startup | Optionally launch the app automatically at login. |
 | Persistent Storage | Tasks and preferences are saved locally and restored between launches. |
-| Automatic Updates | Memo checks for new versions in the background (or on demand from Settings) and installs updates via [Sparkle](https://sparkle-project.org). |
 | Send Feedback | Report a bug, request a feature, or ask a question directly from Settings — no need to leave the app. |
 

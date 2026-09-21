@@ -1,11 +1,9 @@
-import Sparkle
 import SwiftUI
 
 @main
 struct MemoApp: App {
     @State private var store = TodoStore()
     @NSApplicationDelegateAdaptor(AppDelegate.self) private var appDelegate
-    private let updaterController = SPUStandardUpdaterController(startingUpdater: true, updaterDelegate: nil, userDriverDelegate: nil)
 
     var body: some Scene {
         MenuBarExtra {
@@ -25,7 +23,7 @@ struct MemoApp: App {
         .menuBarExtraStyle(.window)
 
         Settings {
-            SettingsView(store: store, updaterController: updaterController)
+            SettingsView(store: store)
         }
     }
 }

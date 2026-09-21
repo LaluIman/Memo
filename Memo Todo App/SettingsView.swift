@@ -1,17 +1,8 @@
-import Sparkle
 import SwiftUI
 
 struct SettingsView: View {
     @Bindable var store: TodoStore
-    let updaterController: SPUStandardUpdaterController
     @State private var showingFeedback = false
-
-    private var automaticallyChecksForUpdates: Binding<Bool> {
-        Binding(
-            get: { updaterController.updater.automaticallyChecksForUpdates },
-            set: { updaterController.updater.automaticallyChecksForUpdates = $0 }
-        )
-    }
 
     var body: some View {
         VStack(spacing: 0) {
@@ -68,26 +59,6 @@ struct SettingsView: View {
                         }
                     }
                 }
-
-                Section("Updates") {
-                    Toggle("Automatically Check for Updates", isOn: automaticallyChecksForUpdates)
-                        .toggleStyle(.checkbox)
-
-                    HStack {
-                        Button("Check for Updates...") {
-                            updaterController.checkForUpdates(nil)
-                        }
-                        .disabled(!updaterController.updater.canCheckForUpdates)
-
-                        Spacer()
-
-                        if let lastCheck = updaterController.updater.lastUpdateCheckDate {
-                            Text("Last checked \(lastCheck.formatted(date: .abbreviated, time: .shortened))")
-                                .font(.caption)
-                                .foregroundStyle(.secondary)
-                        }
-                    }
-                }
             }
             .formStyle(.grouped)
 
@@ -114,7 +85,7 @@ struct SettingsView: View {
             }
             .padding(.bottom, 14)
         }
-        .frame(width: 500, height: 560)
+        .frame(width: 500, height: 460)
         .onDisappear {
             NSApp.setActivationPolicy(.accessory)
         }
@@ -139,6 +110,5 @@ private extension Bundle {
 }
 
 #Preview {
-    let updaterController = SPUStandardUpdaterController(startingUpdater: false, updaterDelegate: nil, userDriverDelegate: nil)
-    return SettingsView(store: TodoStore(), updaterController: updaterController)
+    SettingsView(store: TodoStore())
 }
