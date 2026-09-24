@@ -28,8 +28,6 @@ Memo isn't notarized, so macOS Gatekeeper will block it the first time you open 
 
 This is only needed once, for this initial install. Memo checks for updates automatically and installs them itself via Sparkle — those updates do not require repeating the steps above.
 
-> **Note:** On that first open, macOS may run a one-time security scan on the new binary, and you might briefly see *"Memo.app" is not responding"*. This isn't a crash — just wait a few seconds and open it again; it'll launch normally from then on.
-
 Prefer to build it yourself instead? Clone the repo and hit **Run** in Xcode (⌘R) — it's signed with your own Apple ID during the build, so it launches immediately with no security warnings.
 
 ```bash
