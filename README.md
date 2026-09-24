@@ -8,7 +8,7 @@
     <img src="https://img.shields.io/badge/license-MIT-green" alt="License: MIT" />
   </p>
   <br>
-  <img width="528" alt="Memo menu bar dropdown showing a task list with priorities" src="https://github.com/user-attachments/assets/35fc68db-27f9-4ee0-aa03-f3d4816f0354" />
+  <img width="551" height="359" alt="Preview" src="https://github.com/user-attachments/assets/a8fbad58-beaf-4d04-bb06-2512cec132c8" />
   <br>
   <br>
 </div>
