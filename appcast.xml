@@ -6,6 +6,20 @@
         <description>Most recent changes for Memo, with links to updates.</description>
         <language>en</language>
         <!-- RELEASE_ITEMS_START: scripts/release.sh inserts new <item> entries directly below this line. Do not remove or duplicate this comment. -->
+        <item>
+            <title>Version 1.0</title>
+            <sparkle:releaseNotesLink>https://github.com/LaluIman/Memo/releases/tag/v1.0</sparkle:releaseNotesLink>
+            <pubDate>Thu, 24 Sep 2026 13:14:57 +0000</pubDate>
+            <enclosure
+                url="https://github.com/LaluIman/Memo/releases/download/v1.0/Memo-1.0.dmg"
+                sparkle:version="1"
+                sparkle:shortVersionString="1.0"
+                length="1838342"
+                type="application/x-apple-diskimage"
+                sparkle:edSignature="WhQX8qXh7Nr/jqYQKEgm/Dth15hbBuVynbUMFbXRiol2E8PQ8wZjEmu0Sz0lfwR8AfwsV454b9vGpcppDuWTAg=="
+            />
+            <sparkle:minimumSystemVersion>27.0</sparkle:minimumSystemVersion>
+        </item>
         <!--
             Example of what a release entry looks like:
 
