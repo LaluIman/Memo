@@ -17,7 +17,18 @@ Memo turns your macOS menu bar into a running task list — no Dock icon, no win
 
 ## Installation
 
-Memo is distributed as source only — it isn't notarized, so a prebuilt download would be blocked by Gatekeeper. Build it yourself with Xcode:
+Download the latest `.dmg` from [Releases](https://github.com/LaluIman/Memo/releases), open it, and drag **Memo** into Applications.
+
+Memo isn't notarized, so macOS Gatekeeper will block it the first time you open it. To allow it:
+
+1. Double-click **Memo.app** — you'll see *"Memo.app" Not Opened*. Click **Done**.
+2. Open **System Settings → Privacy & Security**, scroll down to the **Security** section.
+3. Find *"Memo.app" was blocked to protect your Mac* and click **Open Anyway**, then confirm with your password or Touch ID.
+4. Open **Memo.app** again — a final confirmation dialog appears. Click **Open**.
+
+This is only needed once, for this initial install. Memo checks for updates automatically and installs them itself via Sparkle — those updates do not require repeating the steps above.
+
+Prefer to build it yourself instead? Clone the repo and hit **Run** in Xcode (⌘R) — it's signed with your own Apple ID during the build, so it launches immediately with no security warnings.
 
 ```bash
 git clone https://github.com/LaluIman/Memo.git
@@ -25,12 +36,10 @@ cd Memo
 open "Memo Todo App.xcodeproj"
 ```
 
-Then hit **Run** in Xcode (⌘R). The app is signed with your own Apple ID during the build, so it launches immediately with no security warnings.
-
 **Requirements:**
 - macOS 27 Golden Gate or later
 - Apple Silicon
-- Xcode 26 or later, with a free Apple ID signed in (Xcode → Settings → Accounts)
+- (Building from source) Xcode 26 or later, with a free Apple ID signed in (Xcode → Settings → Accounts)
 
 ## Features
 
@@ -62,5 +71,6 @@ Then hit **Run** in Xcode (⌘R). The app is signed with your own Apple ID durin
 | Customizable Icon | Choose from several menu bar icon styles (Default, Checklist, Checkmark Circle, List, Star, Tray). |
 | Launch at Startup | Optionally launch the app automatically at login. |
 | Persistent Storage | Tasks and preferences are saved locally and restored between launches. |
+| Automatic Updates | Memo checks for new versions in the background (or on demand from Settings) and installs updates via [Sparkle](https://sparkle-project.org). |
 | Send Feedback | Report a bug, request a feature, or ask a question directly from Settings — no need to leave the app. |
 

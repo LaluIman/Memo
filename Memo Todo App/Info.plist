@@ -4,5 +4,13 @@
 <dict>
 	<key>CFBundleIconName</key>
 	<string>AppIcon</string>
+	<key>SUFeedURL</key>
+	<string>https://raw.githubusercontent.com/LaluIman/Memo/main/appcast.xml</string>
+	<key>SUPublicEDKey</key>
+	<string>G4QD0KO8tvooTSMRQHLEVW4W/G9o08OOgpvXtXALNeI=</string>
+	<key>SUEnableAutomaticChecks</key>
+	<true/>
+	<key>SUScheduledCheckInterval</key>
+	<integer>86400</integer>
 </dict>
 </plist>

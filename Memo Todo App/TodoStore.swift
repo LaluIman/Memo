@@ -61,6 +61,9 @@ final class TodoStore {
         items.filter(\.isCompleted).count
     }
 
+    private static let maxUndoDepth = 20
+    private var undoStack: [[TodoItem]] = []
+
     private let defaultsKey = "todoItems"
     private let menuBarIconStyleKey = "menuBarIconStyle"
     private let showCounterKey = "showCounter"
@@ -119,11 +122,27 @@ final class TodoStore {
     }
 
     func delete(_ item: TodoItem) {
+        pushUndoSnapshot()
         items.removeAll { $0.id == item.id }
     }
 
     func clearCompleted() {
+        pushUndoSnapshot()
         items.removeAll { $0.isCompleted }
+    }
+
+    var canUndo: Bool { !undoStack.isEmpty }
+
+    func undo() {
+        guard let previous = undoStack.popLast() else { return }
+        items = previous
+    }
+
+    private func pushUndoSnapshot() {
+        undoStack.append(items)
+        if undoStack.count > Self.maxUndoDepth {
+            undoStack.removeFirst()
+        }
     }
 
     func updateTitle(of item: TodoItem, to newTitle: String) {

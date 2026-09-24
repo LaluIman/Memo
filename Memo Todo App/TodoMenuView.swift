@@ -27,15 +27,27 @@ struct TodoMenuView: View {
                     .padding(12)
             } else {
                 VStack(alignment: .leading, spacing: 0) {
-                    ForEach(displayedItems) { item in
-                        row(for: item)
+                    ForEach(TaskDueGroup.allCases) { group in
+                        let itemsInGroup = displayedItems.filter { $0.dueGroup == group }
+                        if !itemsInGroup.isEmpty {
+                            sectionHeader(group)
+                            ForEach(itemsInGroup) { item in
+                                row(for: item)
+                            }
+                            .reorderable()
+                        }
                     }
-                    .reorderable()
                 }
                 .reorderContainer(for: TodoItem.self) { difference in
                     applyReorder(difference)
                 }
             }
+
+            Button(action: { store.undo() }) { EmptyView() }
+                .keyboardShortcut("z", modifiers: .command)
+                .disabled(!store.canUndo)
+                .frame(width: 0, height: 0)
+                .opacity(0)
 
             Divider()
 
@@ -181,6 +193,15 @@ struct TodoMenuView: View {
         }
         .padding(.horizontal, 8)
         .padding(.vertical, 4)
+    }
+
+    private func sectionHeader(_ group: TaskDueGroup) -> some View {
+        Text(group.label)
+            .font(.caption.weight(.semibold))
+            .foregroundStyle(.secondary)
+            .padding(.horizontal, 8)
+            .padding(.top, 8)
+            .padding(.bottom, 2)
     }
 
     private func dueDatePicker(for item: TodoItem) -> some View {
